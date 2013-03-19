@@ -20,7 +20,8 @@ module BeakerBot
       @@impls.each_value do |handler|
         puts "Trying #{handler} for message #{message}"
         if handler.can_handle? message
-          return handler.handle message
+          @handler = handler.new
+          return @handler.handle message
         end
       end
       return error_reply

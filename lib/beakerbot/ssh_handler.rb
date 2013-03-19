@@ -5,7 +5,7 @@ module BeakerBot
   class SshHandler < MessageHandler
     register(:ssh, /^ssh/)
 
-    def self.handle message
+    def handle message
       return "Ssh handler, handling message #{message}"
     end
    
