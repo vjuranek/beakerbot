@@ -8,6 +8,10 @@ module BeakerBot
     def handle message
       return "Ssh handler, handling message #{message}"
     end
+
+    def self.get_help
+      return "Run 'ssh exec [ssh commnd] on [host]' to execute ssh command on given host"
+    end
    
   end
   

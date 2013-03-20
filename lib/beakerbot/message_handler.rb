@@ -3,10 +3,12 @@ module BeakerBot
   class MessageHandler
     @@impls = {}
     @reg_exp
+    @help
     
-    def self.register(type, reg_exp)
+    def self.register(type, reg_exp, help = "Sorry, no help available yet")
       @@impls[type] = self
       @reg_exp = reg_exp
+      @help = help
     end
     
     def self.can_handle? message
@@ -29,6 +31,10 @@ module BeakerBot
     
     def self.error_reply
       return "Unknown command, type 'help' for listing available commands"
+    end
+
+    def self.get_help
+      @help
     end
 
   end
