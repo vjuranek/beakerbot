@@ -26,9 +26,6 @@ module BeakerBot
       return reply
     end
 
-    def exec_cmd(cmd)
-    end
-
     def self.get_syntax
       return "ssh exec [ssh commnd] on [host] as [user]"
     end

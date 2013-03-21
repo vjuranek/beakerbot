@@ -31,9 +31,6 @@ module BeakerBot
       return reply
     end
 
-    def exec_cmd(cmd)
-    end
-
     def self.get_syntax
       return "scp [local_file] to [host:remote_file] as [username]"
     end
