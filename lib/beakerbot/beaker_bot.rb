@@ -4,17 +4,15 @@ module BeakerBot
   
   class BeakerBot < Cinch::Bot
 
-    SERVER = "irc.devel.redhat.com"
-    CHANNEL = "#jenkins"
-    NICK = "beakerbot"
-    
-    def initialize
+    def initialize()
       super
-
+      
+      cfg = Settings.instance()
+      puts "Connecting to #{cfg.server} #{cfg.channels} as #{cfg.nick}"
       configure do |c|
-        c.server = SERVER
-        c.channels = [CHANNEL]
-        c.nick     = NICK
+        c.server = cfg.server
+        c.channels = cfg.channels
+        c.nick = cfg.nick
       end
 
       on :message, /^(#{NICK}|#{NICK}:) (.+)/ do |m, nick, message|
