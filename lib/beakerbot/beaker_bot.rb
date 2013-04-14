@@ -4,7 +4,7 @@ module BeakerBot
   
   class BeakerBot < Cinch::Bot
 
-    def initialize()
+    def initialize
       super
       
       cfg = Settings.instance()
