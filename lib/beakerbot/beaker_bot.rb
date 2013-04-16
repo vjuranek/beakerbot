@@ -7,15 +7,14 @@ module BeakerBot
     def initialize
       super
       
-      cfg = Settings.instance()
-      puts "Connecting to #{cfg.server} #{cfg.channels} as #{cfg.nick}"
+      cfg = Settings.instance().global
       configure do |c|
-        c.server = cfg.server
-        c.channels = cfg.channels
-        c.nick = cfg.nick
+        c.server = cfg['server']
+        c.channels = cfg['channels']
+        c.nick = cfg['nick']
       end
 
-      on :message, /^(#{NICK}|#{NICK}:) (.+)/ do |m, nick, message|
+      on :message, /^(#{cfg['nick']}|#{cfg['nick']}:) (.+)/ do |m, nick, message|
         m.reply MessageHandler.handle_message(message)
       end
 

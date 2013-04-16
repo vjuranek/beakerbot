@@ -11,17 +11,21 @@ module BeakerBot
       @config = YAML.load_file(File.dirname(__FILE__) + "/../../config/beakerbot.yaml")
     end
     
-    def server
-      @config['server']
+    def global
+      @config['global']
     end
+    
+    # def server
+    #   @config['global']['server']
+    # end
 
-    def channels
-      @config['channels']
-    end
+    # def channels
+    #   @config['global']['channels']
+    # end
 
-    def nick
-      @config['nick']
-    end
+    # def nick
+    #   @config['global']['nick']
+    # end
 
   end
 
