@@ -5,7 +5,7 @@ module BeakerBot
 
     def handle message
 
-      case message
+      case 
       when /^jenkins\sconnect\s([\w\d\.]+)\sas\s(.+)$/ =~ message
         hostname = $1
         slave_name = $2
