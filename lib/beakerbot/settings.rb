@@ -15,18 +15,6 @@ module BeakerBot
       @config['global']
     end
     
-    # def server
-    #   @config['global']['server']
-    # end
-
-    # def channels
-    #   @config['global']['channels']
-    # end
-
-    # def nick
-    #   @config['global']['nick']
-    # end
-
   end
 
 end
