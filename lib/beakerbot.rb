@@ -2,6 +2,7 @@
 #   require file
 # end
 
+require "beakerbot/beaker.rb"
 require "beakerbot/beaker_bot.rb"
 require "beakerbot/message_handler.rb"
 require "beakerbot/beaker_handler.rb"
