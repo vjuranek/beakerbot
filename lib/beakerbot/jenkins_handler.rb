@@ -11,20 +11,23 @@ module BeakerBot
       hostname = $1
       slave_name = $2
 
+      cfg_j = Settings.instance().jenkins
+      cfg_b = Settings.instance().beaker
+
       reply = "Connecting '#{hostname}' as '#{slave_name}' ... \n"
       begin
-        ssh = Net::SSH.start(hostname, "root")
-        ssh.exec!("yum -y install subversion")
-        ssh.exec!("svn co --non-interactive --trust-server-cert https://svn.devel.redhat.com/repos/jboss-qa/hudson/config_repository/tools/rhts")
-        ssh.exec!("sed -i 's/$SLAVE_NAME/#{slave_name}/' ./rhts/prepare.sh")
-        ssh.exec!("chmod a+x ./rhts/prepare.sh")
-        ssh.exec!("./rhts/prepare.sh")
+        ssh = Net::SSH.start(hostname, "#{cfg_b['username']}")
+        ssh.exec!("yum -y install #{cfg_b['preinstalled_packages']}")
+        ssh.exec!("svn co --non-interactive --trust-server-cert #{cfg_b['svn_repo']}")
+        ssh.exec!("sed -i 's/$SLAVE_NAME/#{slave_name}/' ./#{cfg_b['init_script']}")
+        ssh.exec!("chmod a+x ./#{cfg_b['init_script']}")
+        ssh.exec!("./#{cfg_b['init_script']}")
         ssh.close
       rescue Exception => err
         reply += "Somethig went wrong: #{err}"
       end
       reply += "[OK]"
-      reply += "Check https://jenkins.mw.lab.eng.bos.redhat.com/hudson/computer/#{slave_name}/"
+      reply += "Check #{cfg_j['server']}/computer/#{slave_name}/"
 
       return reply
     end

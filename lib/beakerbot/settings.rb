@@ -15,6 +15,14 @@ module BeakerBot
       @config['global']
     end
     
+    def jenkins
+      @config['jenkins']
+    end
+
+    def beaker
+      @config['beaker']
+    end
+
   end
 
 end
