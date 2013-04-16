@@ -4,31 +4,29 @@ module BeakerBot
     register(:jenkins, /^jenkins/)
 
     def handle message
-      if not /^jenkins\sconnect\s([\w\d\.]+)\sas\s(.+)$/ =~ message
+
+      case message
+      when /^jenkins\sconnect\s([\w\d\.]+)\sas\s(.+)$/ =~ message
+        hostname = $1
+        slave_name = $2
+        return connect_slave(hostname, slave_name)
+      else
         return "#{message} doesn't seem to be valid request, syntax is #{self.class.get_syntax}"
       end
 
-      hostname = $1
-      slave_name = $2
+    end
 
-      cfg_j = Settings.instance().jenkins
-      cfg_b = Settings.instance().beaker
-
+    def connect_slave(hostname, slave_name)
+      cfg = Settings.instance().jenkins
       reply = "Connecting '#{hostname}' as '#{slave_name}' ... \n"
       begin
-        ssh = Net::SSH.start(hostname, "#{cfg_b['username']}")
-        ssh.exec!("yum -y install #{cfg_b['preinstalled_packages']}")
-        ssh.exec!("svn co --non-interactive --trust-server-cert #{cfg_b['svn_repo']}")
-        ssh.exec!("sed -i 's/$SLAVE_NAME/#{slave_name}/' ./#{cfg_b['init_script']}")
-        ssh.exec!("chmod a+x ./#{cfg_b['init_script']}")
-        ssh.exec!("./#{cfg_b['init_script']}")
-        ssh.close
+        Beaker.connect_machine(hostname, slave_name)
       rescue Exception => err
         reply += "Somethig went wrong: #{err}"
         return reply
       end
       reply += "[OK]"
-      reply += "Check #{cfg_j['server']}/computer/#{slave_name}/"
+      reply += "Check #{cfg['server']}/computer/#{slave_name}/"
 
       return reply
     end
