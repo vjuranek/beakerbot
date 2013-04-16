@@ -25,6 +25,7 @@ module BeakerBot
         ssh.close
       rescue Exception => err
         reply += "Somethig went wrong: #{err}"
+        return reply
       end
       reply += "[OK]"
       reply += "Check #{cfg_j['server']}/computer/#{slave_name}/"
